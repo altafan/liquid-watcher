@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -ex
+
+PARENT_PATH=$(dirname $(cd $(dirname $0); pwd -P))
+
+pushd $PARENT_PATH
+
+mkdir -p wally_dist
+
+docker build --no-cache -t wally_dist_build:latest -f resources/linuxbuild/Dockerfile .
+docker run --name linux-build wally_dist_build:latest
+docker cp linux-build:/libwally-core/wally_dist/wallycore-0.7.3-cp36-cp36m-linux_x86_64.whl ./wally_dist
+docker rm linux-build
+docker rmi wally_dist_build:latest
+
+popd

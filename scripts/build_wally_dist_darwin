@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PARENT_PATH=$(dirname $(cd $(dirname $0); pwd -P))
+
+pushd $PARENT_PATH
+mkdir -p wally_dist
+
+git clone git@github.com:ElementsProject/libwally-core.git
+cd libwally-core
+./tools/build_python_wheels.sh python3
+cp wally_dist/wallycore-0.7.3-cp37-cp37m-macosx_10_12_x86_64.whl $PARENT_PATH/wally_dist/
+cd .. && rm -rf libwally-core
+
+popd

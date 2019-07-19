@@ -1,0 +1,8 @@
+.venv
+.vscode
+
+.DS_Store
+
+*.json
+
+wally_dist
